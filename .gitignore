@@ -1,0 +1,70 @@
+# ----------------------
+# Python
+# ----------------------
+*.py[cod]
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+
+# ----------------------
+# Virtual Environments
+# ----------------------
+venv/
+env/
+ENV/
+.venv/
+
+# ----------------------
+# Django
+# ----------------------
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+local_settings.py
+.settings/
+media/
+staticfiles/
+*.mo
+
+# ----------------------
+# Environment variables
+# ----------------------
+.env
+.env.*
+
+# ----------------------
+# IDE / Editor files
+# ----------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.iml
+*.swp
+
+# ----------------------
+# OS files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Pipenv / Poetry
+# ----------------------
+Pipfile.lock
+poetry.lock
+
+# ----------------------
+# Misc
+# ----------------------
+*.bak
+*.tmp

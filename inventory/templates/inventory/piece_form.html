@@ -1,0 +1,43 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+<h2 class="mb-4">➕ Ajouter une pièce</h2>
+
+<div class="card shadow p-4">
+  <form method="post" enctype="multipart/form-data" id="pieceForm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Enregistrer</button>
+    <a href="{% url 'inventory:pieces_list' %}" class="btn btn-secondary">Annuler</a>
+  </form>
+</div>
+<script>
+document.getElementById("pieceForm").addEventListener("submit", function(e){
+    e.preventDefault(); // on bloque l’envoi du formulaire le temps de confirmer
+
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: "Veuillez taper 12345 pour confirmer.",
+      input: 'text',
+      inputPlaceholder: 'Tapez 12345 ici',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#d33',
+      preConfirm: (value) => {
+        if(value !== "12345"){
+          Swal.showValidationMessage("❌ Code incorrect !");
+          return false;
+        }
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // ✅ code correct → on soumet le formulaire
+        e.target.submit();
+      }
+    });
+});
+</script>
+{% endblock %}

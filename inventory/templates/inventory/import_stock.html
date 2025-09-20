@@ -1,0 +1,75 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+<h2 class="mb-4">📥 Importer un fichier Excel</h2>
+
+<div class="card shadow p-4">
+  <form method="post" enctype="multipart/form-data" id="importForm">
+    {% csrf_token %}
+    <input type="file" name="file" class="form-control mb-3" required>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-file-excel"></i> Importer
+    </button>
+    <a href="{% url 'inventory:pieces_list' %}" class="btn btn-secondary">Annuler</a>
+  </form>
+</div>
+
+<!-- 🔹 Zone d'affichage du rapport -->
+{% if rapport %}
+<div class="mt-4">
+  <h5>📊 Rapport de l'import :</h5>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Ligne</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ligne in rapport %}
+        <tr {% if "Erreur" in ligne %}class="table-danger"{% endif %}>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ ligne }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-success mt-3">
+  ✅ Importation réussie, aucune erreur détectée.
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.getElementById("importForm").addEventListener("submit", function(e){
+    e.preventDefault(); // on bloque l’envoi pour demander confirmation
+
+    Swal.fire({
+      title: 'Confirmez l’import',
+      text: "Tapez 12345 pour confirmer l'import du fichier Excel",
+      input: 'text',
+      inputPlaceholder: '12345',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#d33',
+      preConfirm: (value) => {
+        if(value !== "12345"){
+          Swal.showValidationMessage("❌ Code incorrect !");
+          return false;
+        }
+        return true;
+      }
+    }).then((result) => {
+      if(result.isConfirmed){
+        showLoader(); // afficher le loader pendant l'import
+        e.target.submit();
+      }
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+- add transaction;*********
+- mettre un login pour rentrer dans les transaction;*************
+- eviter les doublons (references)
+- lister les pieces en alertes****************
+- plus de precision sur l' historique de transaction***********************
+- un petit graphique********************
+- importer avec un upload
+- rendre le programme totalement horsligne ou comment le deplacer d' une machine a une  autre
+- exportation specifique

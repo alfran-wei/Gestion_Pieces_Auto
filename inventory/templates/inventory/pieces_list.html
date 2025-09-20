@@ -1,0 +1,100 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+<h2 class="mb-4">📋 Liste des pièces</h2>
+
+<!-- 🔎 Barre de recherche -->
+<div class="mb-3">
+  <input type="text" id="searchInput" class="form-control" placeholder="Rechercher une pièce, une marque ou une référence...">
+</div>
+<!-- Bouton d’export -->
+<div class="mb-3">
+  <button id="exportBtn" class="btn btn-success">
+    <i class="fas fa-file-excel"></i> Exporter en Excel
+  </button>
+</div>
+
+
+<!-- 📦 Conteneur des cartes -->
+<div class="row" id="piecesCards"></div>
+
+<script>
+$(document).ready(function(){
+
+  const container = $("#piecesCards");
+
+  // Fonction pour générer les cartes
+  function renderCards(items){
+    container.empty();
+
+    if(!items || items.length === 0){
+      container.append('<p class="text-muted">Aucune pièce trouvée.</p>');
+      return;
+    }
+
+    items.forEach(function(item){
+      const nom = item.nom_piece ? item.nom_piece.trim() : "N/A";
+      const marque = item.marque ? item.marque.trim() : "N/A";
+      const reference = item.reference ? item.reference.trim() : "N/A";
+      const stock_reel = item.stock_reel !== undefined ? item.stock_reel : 0;
+      const stock_securite = item.stock_securite !== undefined ? item.stock_securite : 0;
+      const badge = item.statut === "ALERTE"
+        ? '<span class="badge bg-danger">ALERTE</span>'
+        : '<span class="badge bg-success">OK</span>';
+
+      container.append(`
+        <div class="col-md-4 mb-3 piece-card">
+          <div class="card shadow h-100">
+            <div class="card-body">
+              <h5 class="card-title">${nom} (${marque})</h5>
+              <p class="card-text">
+                Réf: ${reference}<br>
+                Stock réel: <strong>${stock_reel}</strong><br>
+                Seuil: ${stock_securite}<br>
+                ${badge}
+              </p>
+            </div>
+          </div>
+        </div>
+      `);
+    });
+  }
+
+  // Appel API
+  $.getJSON("{% url 'inventory:api_pieces' %}")
+    .done(function(data){
+      console.log("API data reçue :", data);
+      renderCards(data.data);
+
+      // Filtrage dynamique
+      $("#searchInput").on("keyup", function(){
+        const query = $(this).val().toLowerCase();
+        const filtered = data.data.filter(function(item){
+          return (
+            (item.nom_piece && item.nom_piece.toLowerCase().includes(query)) ||
+            (item.marque && item.marque.toLowerCase().includes(query)) ||
+            (item.reference && item.reference.toLowerCase().includes(query))
+          );
+        });
+        renderCards(filtered);
+      });
+    })
+    .fail(function(jqxhr, textStatus, error){
+      console.error("Erreur lors de la récupération des pièces :", textStatus, error);
+      container.html('<p class="text-danger">Impossible de charger les pièces. Veuillez réessayer plus tard.</p>');
+    });
+
+});
+
+// Exporter avec le filtre actuel
+$("#exportBtn").on("click", function(){
+  const query = $("#searchInput").val().trim();
+  let url = "{% url 'inventory:export_stock' %}";
+  if(query){
+    url += "?q=" + encodeURIComponent(query);
+  }
+  window.location.href = url; // télécharge le fichier
+});
+
+</script>
+
+{% endblock %}

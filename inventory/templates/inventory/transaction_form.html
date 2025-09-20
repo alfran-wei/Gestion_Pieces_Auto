@@ -1,0 +1,93 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+<h3>Ajouter une transaction</h3>
+
+<form method="post" novalidate id="transactionForm">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+      {% for err in form.non_field_errors %}
+        <div>{{ err }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="mb-3">
+    <label class="form-label">Pièce</label>
+    {{ form.piece }}
+    {% for e in form.piece.errors %}<div class="text-danger">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Type</label>
+    {{ form.type }}
+    {% for e in form.type.errors %}<div class="text-danger">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Quantité</label>
+    {{ form.quantite }}
+    {% for e in form.quantite.errors %}<div class="text-danger">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Date et heure</label>
+    {{ form.date }}
+    <div class="form-text">Cliquer <strong>"Maintenant"</strong> pour remplir la date/heure courante du navigateur.</div>
+    {% for e in form.date.errors %}<div class="text-danger">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Commentaire</label>
+    {{ form.commentaire }}
+    {% for e in form.commentaire.errors %}<div class="text-danger">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <button type="button" id="btnNow" class="btn btn-secondary">Maintenant</button>
+    <a href="{% url 'inventory:pieces_list' %}" class="btn btn-link">Annuler</a>
+  </div>
+
+  <p class="mt-2"><small>Heure du serveur : {{ server_now }}. Note : l'heure du navigateur peut différer de celle du serveur.</small></p>
+</form>
+<script>
+document.getElementById("transactionForm").addEventListener("submit", function(e){
+    e.preventDefault(); // on bloque l’envoi du formulaire le temps de confirmer
+
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: "Veuillez taper 12345 pour confirmer.",
+      input: 'text',
+      inputPlaceholder: 'Tapez 12345 ici',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#d33',
+      preConfirm: (value) => {
+        if(value !== "12345"){
+          Swal.showValidationMessage("❌ Code incorrect !");
+          return false;
+        }
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // ✅ code correct → on soumet le formulaire
+        e.target.submit();
+      }
+    });
+});
+</script>
+<script>
+document.getElementById('btnNow').addEventListener('click', function(){
+  const now = new Date();
+  const tzoffset = now.getTimezoneOffset() * 60000;
+  const localISO = new Date(Date.now() - tzoffset).toISOString().slice(0,16);
+  const input = document.getElementById('id_date');
+  if(input) input.value = localISO;
+});
+</script>
+{% endblock %}
