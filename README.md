@@ -1,118 +1,109 @@
-📦 Gestion des pièces auto
+# 🚗 Gestion du Stock de Pièces Automobiles
 
-Application web Django pour la gestion complète du stock de pièces automobiles : centralisation, suivi, analyse, transactions, import/export Excel, interface intuitive et responsive.
+![App Screenshot](lien_vers_screenshot.png)
 
-🔎 Project Overview
+Une application web développée avec **Django** pour la gestion complète du stock de pièces automobiles. Elle permet de centraliser, suivre et analyser les pièces en stock, les transactions, ainsi que l’import/export de données via fichiers Excel. L’interface est intuitive et interactive pour faciliter le travail des ateliers et services de gestion de stocks.
 
-Gestion des pièces auto permet :
+---
 
-La création et modification des pièces et transactions
+## 🔎 Vue d'ensemble du projet
 
-La consultation et recherche de pièces (marque, nom, référence)
+Cette application permet à l’utilisateur de :  
 
-L’importation de fichiers Excel pour mettre à jour le stock
+- Ajouter, modifier et supprimer des pièces
+- Suivre les transactions d’entrée et de sortie
+- Importer et exporter des fichiers Excel
+- Filtrer et rechercher les pièces rapidement
+- Visualiser les alertes de stock (seuils minimums)
 
-L’exportation des pièces ou résultats filtrés vers Excel
+L’application est conçue pour être **responsive, rapide et facile à utiliser**.
 
-Le suivi des seuils de stock et des alertes
+---
 
-Une interface fluide et responsive pour desktop et mobile
+## 🚀 Fonctionnalités principales
 
-🚀 Features
+- 📦 Gestion complète des pièces et du stock  
+- 🔄 Suivi des transactions entrantes et sortantes  
+- 📥 Importation de fichiers Excel  
+- 📤 Exportation des résultats filtrés  
+- 🔍 Recherche et filtres dynamiques  
+- ⚠️ Alertes de stock faible  
+- 🖥️ Interface moderne et responsive  
 
-📦 Gestion complète du stock
+---
 
-🔍 Recherche dynamique et filtrage instantané
+## 🧰 Technologies utilisées
 
-📥 Importation Excel (.xlsx) avec validation ligne par ligne
+- Python 3 & Django  
+- HTML5, CSS3, Bootstrap 5  
+- JavaScript & jQuery  
+- SweetAlert2 (confirmations et alertes)  
+- DataTables (tableaux dynamiques)  
+- SQLite (ou toute autre base de données Django)
 
-📤 Export des résultats filtrés vers Excel
+---
 
-⚠️ Alertes de stock faible
+## 🧠 Architecture & Solution
 
-🧾 Historique des transactions et activités
+- Les données des pièces sont centralisées dans un modèle Django `Piece`  
+- Les transactions sont liées aux pièces pour suivre les entrées et sorties  
+- Les imports Excel sont normalisés et validés avant insertion  
+- Les exports peuvent être complets ou filtrés selon la recherche  
+- Les alertes et confirmations sont gérées côté front avec **SweetAlert2**  
 
-🖥️ Interface web responsive
+---
 
-🧰 Technologies Used
+## 🖼️ Structure du projet
+![App Scructure](lien_vers_screenshot.png)
 
-Backend : Python 3 / Django 5
 
-Frontend : HTML5, CSS3, JavaScript, jQuery, Bootstrap 5
+---
 
-Librairies : SweetAlert2, pandas, openpyxl
+## 🌐 Démo en ligne
 
-Base de données : SQLite (modifiable)
+Lien vers la démo : [Votre lien ici](#)
 
-🧠 Approach & Solution
+---
 
-Les données sont stockées dans une base Django.
+## ⚙️ Installation
 
-L’import Excel est traité côté serveur avec vérification et retour d’erreurs.
-
-Les exports peuvent cibler tout le stock ou uniquement les résultats filtrés.
-
-Actions critiques (ajout, import, transaction) validées via pop-ups de confirmation.
-
-Architecture modulaire et extensible pour ajouter de nouvelles fonctionnalités facilement.
-
-🖼️ Project Structure
-📁 inventory/
-   ├─ migrations/
-   ├─ templates/
-   │   └─ inventory/
-   │       ├─ base.html
-   │       ├─ pieces_list.html
-   │       ├─ piece_form.html
-   │       └─ import_stock.html
-   ├─ static/
-   │   ├─ css/
-   │   ├─ js/
-   │   └─ images/
-   ├─ models.py
-   ├─ views.py
-   └─ urls.py
-📄 manage.py
-📄 db.sqlite3
-📄 requirements.txt
-📄 README.md
-
-🌐 Live Demo
-
-Voir le projet en ligne
- (ou ton URL de déploiement)
-
-⚙️ Installation
-
-Cloner le repository :
-
+1. Cloner le repository :  
+```bash
 git clone https://github.com/tonusername/gestion-pieces-auto.git
 cd gestion-pieces-auto
+```
 
+2. Créer un environnement virtuel
+```bash
+python -m venv venv
+```
 
-Installer les dépendances :
+3. Activer l’environnement virtuel
+Sur macOS/Linux :
+```bash
+source venv/bin/activate
+```
 
+Sur Windows :
+```bash
+venv\Scripts\activate
+```
+
+4. Installer les dépendances
+```bash
 pip install -r requirements.txt
+```
 
-
-Appliquer les migrations :
-
-python manage.py migrate
-
-
-Créer un superutilisateur :
-
-python manage.py createsuperuser
-
-
-Lancer le serveur :
-
+5. Lancer le serveur Django
+```bash
 python manage.py runserver
+```
 
-👤 Author
+##👤 Auteur
 
 Alfran Essone
 
-📄 License
 
-Ce projet est sous licence MIT. Libre d’utilisation, modification et partage avec attribution.
+##📄 Licence
+
+Ce projet est sous licence MIT. Vous pouvez réutiliser, modifier et partager avec attribution.
