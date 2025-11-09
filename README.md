@@ -1,6 +1,6 @@
 # 🚗 Gestion du Stock de Pièces Automobiles
 
-![App Screenshot](./weather_report/images/screenshot.png)
+![App Screenshot](./static/manage_home.png)
 
 Une application web développée avec **Django** pour la gestion complète du stock de pièces automobiles. Elle permet de centraliser, suivre et analyser les pièces en stock, les transactions, ainsi que l’import/export de données via fichiers Excel. L’interface est intuitive et interactive pour faciliter le travail des ateliers et services de gestion de stocks.
 
