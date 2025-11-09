@@ -54,7 +54,7 @@ L’application est conçue pour être **responsive, rapide et facile à utilise
 ---
 
 ## 🖼️ Structure du projet
-![App Scructure](lien_vers_screenshot.png)
+![App Scructure](./static/manage_structure.png)
 
 
 ---
